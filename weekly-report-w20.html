@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🦞 德胧AI龙虾军团 · W20实践周报 2026.05.11-05.16</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: #0a0e1a;
+    color: #e2e8f0;
+    padding: 32px;
+    min-height: 100vh;
+  }
+  .container { max-width: 940px; margin: 0 auto; }
+
+  /* Header */
+  .report-header {
+    background: linear-gradient(135deg, #1a1f3a 0%, #2d1b69 50%, #11998e 100%);
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .report-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .report-header h1 {
+    font-size: 30px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .report-header .subtitle {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 20px;
+  }
+  .header-stats {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+  .header-stat { text-align: center; }
+  .header-stat .num { font-size: 34px; font-weight: 800; color: #fbbf24; }
+  .header-stat .label { font-size: 11px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+
+  /* Section */
+  .section {
+    background: #111827;
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    border: 1px solid #1f2937;
+  }
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #f8fafc;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .icon { font-size: 20px; }
+  .section-title .tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: #1f2937;
+    color: #9ca3af;
+    font-weight: 400;
+  }
+
+  /* Done items */
+  .done-list { list-style: none; }
+  .done-list li {
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background: #0a0e1a;
+    border-left: 4px solid #22c55e;
+  }
+  .done-list .check { color: #22c55e; font-size: 16px; margin-right: 8px; }
+  .done-list .title { color: #f8fafc; font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .done-list .desc { color: #9ca3af; font-size: 12px; line-height: 1.6; }
+
+  /* Tag badges */
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 1px 7px;
+    border-radius: 6px;
+    margin-right: 4px;
+    font-weight: 600;
+  }
+  .badge-purple { background: rgba(139,92,246,0.2); color: #a78bfa; }
+  .badge-blue { background: rgba(59,130,246,0.2); color: #60a5fa; }
+  .badge-orange { background: rgba(249,115,22,0.2); color: #fb923c; }
+  .badge-green { background: rgba(34,197,94,0.2); color: #4ade80; }
+  .badge-red { background: rgba(239,68,68,0.2); color: #f87171; }
+  .badge-teal { background: rgba(20,184,166,0.2); color: #2dd4bf; }
+
+  /* AI Research cards */
+  .ai-card {
+    background: #0a0e1a;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    border: 1px solid #1f2937;
+  }
+  .ai-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .ai-card .card-title { color: #f8fafc; font-size: 13px; font-weight: 700; }
+  .ai-card .card-date { color: #6b7280; font-size: 11px; }
+  .ai-card .card-body { color: #9ca3af; font-size: 12px; line-height: 1.7; }
+  .ai-card .card-body .highlight { color: #fbbf24; font-weight: 600; }
+  .ai-card .card-body strong { color: #e2e8f0; }
+
+  /* Info items */
+  .info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    background: #0a0e1a;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+  .info-item .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .info-item .label { color: #6b7280; font-size: 11px; margin-top: 2px; }
+  .info-item .value { color: #e2e8f0; font-weight: 600; }
+
+  /* Two column */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* Asset grid */
+  .asset-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 12px;
+  }
+  @media (max-width: 640px) { .asset-grid { grid-template-columns: repeat(2,1fr); } }
+  .asset-item {
+    background: #0a0e1a;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid #1f2937;
+  }
+  .asset-item .num { font-size: 26px; font-weight: 800; color: #fbbf24; }
+  .asset-item .label { font-size: 10px; color: #6b7280; margin-top: 4px; }
+
+  /* Callout */
+  .callout {
+    background: rgba(59,130,246,0.08);
+    border-left: 4px solid #3b82f6;
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 12px;
+    color: #93c5fd;
+    line-height: 1.6;
+  }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 12px; }
+  th { background: #1f2937; color: #e5e7eb; padding: 8px 12px; text-align: left; border-radius: 6px 6px 0 0; }
+  td { padding: 8px 12px; border-bottom: 1px solid #1f2937; color: #d1d5db; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+
+  .status-done { color: #4ade80; font-weight: 600; }
+  .status-progress { color: #fbbf24; font-weight: 600; }
+  .status-todo { color: #9ca3af; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 24px;
+    color: #4b5563;
+    font-size: 12px;
+  }
+  .footer .brand { color: #7c3aed; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="report-header">
+    <h1>🦞 德胧AI龙虾军团 · W20实践周报</h1>
+    <div class="subtitle">2026年5月11日 — 5月16日 &nbsp;|&nbsp; 晁留柱（Louis）+ AI伙伴集群</div>
+    <div class="header-stats">
+      <div class="header-stat"><div class="num">6</div><div class="label">完成事项</div></div>
+      <div class="header-stat"><div class="num">4</div><div class="label">进行中</div></div>
+      <div class="header-stat"><div class="num">12</div><div class="label">Wiki空间索引</div></div>
+      <div class="header-stat"><div class="num">491</div><div class="label">文档扫描量</div></div>
+      <div class="header-stat"><div class="num">28</div><div class="label">实时搜索命中</div></div>
+    </div>
+  </div>
+
+  <!-- 一、晁总核心战略产出 -->
+  <div class="section">
+    <div class="section-title">
+      <span class="icon">🎯</span>
+      晁总核心战略产出
+      <span class="tag">Louis 本周</span>
+    </div>
+    <ul class="done-list">
+      <li>
+        <span class="check">✔</span>
+        <div>
+          <div class="title">
+            <span class="badge badge-purple">战略</span>
+            酒店GEO双增长模型 → 发布3篇深度内容
+          </div>
+          <div class="desc">
+            围绕「天津滨海早餐最好的酒店」「深海矿温泉」「海河景观」三大差异化标签，各产出~4000字SEO内容并发布。GEO格式：开头200字给结论 + 每段首句含数据 + 结尾10条延伸问答。
+            <br>已录入宣推资产库多维表格（bitable: QlPJb9FaAaK55TscHyFcEyYcnGf）
+          </div>
+        </div>
+      </li>
+      <li>
+        <span class="check">✔</span>
+        <div>
+          <div class="title">
+            <span class="badge badge-blue">Skill工厂</span>
+            hotel-xuantui v2.0 + report-beautifier 写入共享池
+          </div>
+          <div class="desc">
+            hotel-xuantui v2.0新增GEO流程（7步）+ humanizer-zh强制调用 + SEO关键词预埋；report-beautifier支持数据报告→精美HTML页面。两者均已写入「多AI协同知识共享池」（ZJ8obBGrSaO9rjsXPvhc1TdYngd）。
+          </div>
+        </div>
+      </li>
+      <li>
+        <span class="check">✔</span>
+        <div>
+          <div class="title">
+            <span class="badge badge-orange">基础设施</span>
+            lark-cli v1.0.31 升级 + 空间清理（1.2G→131M）
+          </div>
+          <div class="desc">
+            全局安装24个官方Skills至~/.agents/skills/；完成本地存储清理，-90%，产物优先存飞书bitable，本地只留skill和python。
+          </div>
+        </div>
+      </li>
+      <li>
+        <span class="check">✔</span>
+        <div>
+          <div class="title">
+            <span class="badge badge-blue">战略</span>
+            推动「飞书aily威胁论」与「OTA内GEO」战略框架定型
+          </div>
+          <div class="desc">
+            核心判断：飞书走「平台收割」路径（开放API→aily学习→限制/提价），龙虾护城河必须是「飞书做不到的事」（跨平台采集/多Agent编排/开源可控）。携程问道本质是AI决策代理，酒店GEO要从「被用户找到」升级为「被AI推荐」。
+          </div>
+        </div>
+      </li>
+      <li>
+        <span class="check">✔</span>
+        <div>
+          <div class="title">
+            <span class="badge badge-blue">战略</span>
+            分享Peekaboo（OpenClaw新作，4100+ Star），推动@Hermes跟进研究
+          </div>
+          <div class="desc">
+            Swift原生、macOS专属——给AI Agent装上眼睛和手。晁总提出后转发给@Hermes要求专项研究。
+          </div>
+        </div>
+      </li>
+      <li>
+        <span class="check">✔</span>
+        <div>
+          <div class="title">
+            <span class="badge badge-orange">运营</span>
+            排班SKILL数据机制协调（对接胡珊珊出租率/预抵数据）
+          </div>
+          <div class="desc">
+            推进排班管理SKILL的底层数据提供机制确认，等待胡珊珊反馈出租率/预抵数据提供方案。
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- 二、AI伙伴集群研讨成果 -->
+  <div class="section">
+    <div class="section-title">
+      <span class="icon">🔬</span>
+      AI伙伴集群研讨成果
+      <span class="tag">5月14-16日</span>
+    </div>
+
+    <div class="ai-card">
+      <div class="card-header">
+        <div class="card-title">🐾 QwenPaw 开源模型子Agent研究</div>
+        <div class="card-date">5月15日</div>
+      </div>
+      <div class="card-body">
+        晁总部署任务：每个AI伙伴安排一个<span class="highlight">子Agent入驻AI研究群</span>，专项研究阿里<span class="highlight">QwenPaw</span>（AgentScope团队开源，原名CoPaw，2026-04-12更名）。<br><br>
+        核心发现：基于Qwen3.5基座，有<span class="highlight">2B/4B/9B三规格</span>；四大Agent原生能力；<span class="highlight">262k超长上下文</span>；Apache-2.0许可可商用。<br><br>
+        <strong>结论：可引入本地作为德胧AI Native增益，建议各伙伴进一步评估集成路径。</strong>
+      </div>
+    </div>
+
+    <div class="ai-card">
+      <div class="card-header">
+        <div class="card-title">🧠 德胧知识中枢 SKILL v2.0 研发完成</div>
+        <div class="card-date">5月16日</div>
+      </div>
+      <div class="card-body">
+        解决 lark-cli User身份授权问题（<span class="highlight">--as bot报131006的根本原因是机器人未加入知识库成员</span>）；完成12个Wiki空间全量扫描（<span class="highlight">491文档/658节点</span>）；完成5个核心飞书群消息扫描（4957条）；构建53,733关键词倒排综合主索引。<br><br>
+        <strong>关键突破：auto身份实际走用户身份，私密Wiki全部可读；新增实时云搜索（realtime_search.py）覆盖整个租户文档库。</strong>
+      </div>
+    </div>
+
+    <div class="ai-card">
+      <div class="card-header">
+        <div class="card-title">📡 飞书多Agent「机器人@机器人」讨论能力升级</div>
+        <div class="card-date">5月14日</div>
+      </div>
+      <div class="card-body">
+        晁总部署「机器人@机器人」讨论能力，要求所有AI伙伴更新飞书CLI最新版并掌握该能力。<span class="highlight">技能写入飞书多维表格共享池</span>（ZJ8obBGrSaO9rjsXPvhc1TdYngd），并通知所有AI伙伴（@小云、@美誉度AI、@腾讯云OpenClaw等）完成升级部署。
+      </div>
+    </div>
+
+    <div class="ai-card">
+      <div class="card-header">
+        <div class="card-title">🏨 客房质检自动化管线 v4 稳定运行</div>
+        <div class="card-date">本周持续</div>
+      </div>
+      <div class="card-body">
+        YOLO v06二分类推理（合格/不合格）+ 不合格图片自动写入unqualified_pool + 训练池累积 + HTML日报 + GitHub Pages发布 + 飞书多维表格输出 + 飞书卡片推送，全链路自动化稳定运行。
+      </div>
+    </div>
+
+    <div class="ai-card">
+      <div class="card-header">
+        <div class="card-title">🔄 DeerFlow 2.0 脚本部署</div>
+        <div class="card-date">本周</div>
+      </div>
+      <div class="card-body">
+        落地DeerFlow 2.0自动化脚本用于德胧酒店预测数据采集，数据落地飞书多维表格（共享池）。
+      </div>
+    </div>
+  </div>
+
+  <!-- 三、进行中 & 下周计划 -->
+  <div class="two-col">
+    <div class="section" style="margin-bottom:0">
+      <div class="section-title">
+        <span class="icon">🔄</span>
+        进行中事项
+      </div>
+      <div class="info-item">
+        <span class="icon">🔍</span>
+        <div>
+          <div class="value">携程问道80个Prompt基准测试</div>
+          <div class="label">待跑S级15个问题，建立基准数据</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="icon">📊</span>
+        <div class="value">GEO监测脚本</div>
+        <div class="label">5月18日17:55执行，验证早餐/温泉/海河篇AI引用</div>
+      </div>
+      <div class="info-item">
+        <span class="icon">🐾</span>
+        <div class="value">QwenPaw 引入评估</div>
+        <div class="label">各AI伙伴子Agent完成QwenPaw集成测试</div>
+      </div>
+      <div class="info-item">
+        <span class="icon">📋</span>
+        <div class="value">排班SKILL · 数据机制确认</div>
+        <div class="label">等待胡珊珊确认出租率/预抵数据提供机制</div>
+      </div>
+    </div>
+
+    <div class="section" style="margin-bottom:0">
+      <div class="section-title">
+        <span class="icon">📅</span>
+        下周计划
+      </div>
+      <div class="info-item">
+        <span class="icon">🔍</span>
+        <div class="value">携程问道基准测试跑完S级</div>
+        <div class="label">建立GEO效果量化基准</div>
+      </div>
+      <div class="info-item">
+        <span class="icon">🧠</span>
+        <div class="value">德胧知识中枢 v2.1 升级</div>
+        <div class="label">视觉化知识地图 + 知识卡预处理</div>
+      </div>
+      <div class="info-item">
+        <span class="icon">🐾</span>
+        <div class="value">QwenPaw 集成落地</div>
+        <div class="label">各伙伴子Agent完成引入评估</div>
+      </div>
+      <div class="info-item">
+        <span class="icon">📹</span>
+        <div class="value">客房质检 · 监控多模态样本采集</div>
+        <div class="label">视频监控+AI报告可行性路径研究</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 四、知识资产快照 -->
+  <div class="section" style="margin-top:20px">
+    <div class="section-title">
+      <span class="icon">🗂️</span>
+      知识中枢资产快照
+    </div>
+    <div class="asset-grid">
+      <div class="asset-item">
+        <div class="num">12</div>
+        <div class="label">Wiki空间</div>
+      </div>
+      <div class="asset-item">
+        <div class="num">491</div>
+        <div class="label">Wiki文档</div>
+      </div>
+      <div class="asset-item">
+        <div class="num">4957</div>
+        <div class="label">群消息</div>
+      </div>
+      <div class="asset-item">
+        <div class="num">53733</div>
+        <div class="label">关键词索引</div>
+      </div>
+    </div>
+    <div class="callout">
+      <strong>⚡ 本周新增能力：实时云搜索（realtime_search.py）</strong> — 调用 lark-cli drive +search 覆盖整个飞书租户文档库，比本地索引（491篇）更全，实时返回最新内容。本周实测「客房质检」28条命中，「免佣规则」精准命中百达屋2025年免佣规则。
+    </div>
+  </div>
+
+  <!-- 五、本周关键教训 -->
+  <div class="section">
+    <div class="section-title">
+      <span class="icon">⚠️</span>
+      本周关键教训
+    </div>
+    <ul class="done-list" style="border-left-color:#f59e0b">
+      <li>
+        <span class="check" style="color:#fbbf24">!</span>
+        <div>
+          <div class="title">SKILL调用失效的根本原因：skill存在但未自动触发</div>
+          <div class="desc">解决方案：生成内容前先读SKILL.md作为强制前置步骤，而非依赖系统自动发现。</div>
+        </div>
+      </li>
+      <li>
+        <span class="check" style="color:#fbbf24">!</span>
+        <div>
+          <div class="title">Bot身份wiki:space:retrieve失败 ≠ 权限不足</div>
+          <div class="desc">根因：机器人未被加入知识库成员（131006=space permission denied），不是scope配置问题。auto/user身份正常工作。</div>
+        </div>
+      </li>
+      <li>
+        <span class="check" style="color:#fbbf24">!</span>
+        <div>
+          <div class="title">subprocess调用lark-cli时PATH环境变量丢失</div>
+          <div class="desc">在Python中用subprocess.run调lark-cli时，env必须包含完整PATH，否则node找不到。已写入delonix-knowledge-hub/SKILL.md。</div>
+        </div>
+      </li>
+      <li>
+        <span class="check" style="color:#fbbf24">!</span>
+        <div>
+          <div class="title">Context limit exceeded — 飞书bot依然频繁触发</div>
+          <div class="desc">飞书CLI和WorkBuddy的上下文限制仍然频繁触发，需持续推进上下文轮值机制落地，降低每次调用的上下文占用。</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    由 <span class="brand">🦞 Claw（小柱）</span> 主笔 · 德胧AI龙虾军团联合出品 &nbsp;|&nbsp; 2026-05-16<br>
+    数据来源：飞书Wiki · 群消息 · 知识共享池 · 实时云搜索
+  </div>
+</div>
+</body>
+</html>
