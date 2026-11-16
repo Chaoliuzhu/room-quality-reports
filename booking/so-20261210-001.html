@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>预订工单AI看板 · SO-20261210-001 港口医院</title>
+<style>
+  :root{
+    --bg:#f5f6f8; --card:#ffffff; --ink:#1f2329; --muted:#6b7280;
+    --accent:#1f6f43; --accent2:#c9a04e; --line:#e5e7eb;
+    --ok:#16a34a; --warn:#d97706; --bad:#dc2626;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);padding:24px;}
+  .wrap{max-width:1080px;margin:0 auto;}
+  header{background:linear-gradient(135deg,#123524 0%,#1f6f43 100%);color:#fff;border-radius:14px;padding:22px 28px;margin-bottom:20px;}
+  header h1{font-size:20px;letter-spacing:.5px;}
+  header .sub{margin-top:6px;font-size:13px;opacity:.85;}
+  header .tags{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;}
+  .tag{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);padding:3px 10px;border-radius:99px;font-size:12px;}
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+  .card h2{font-size:14px;color:var(--muted);font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+  .card h2::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--accent);}
+  .span4{grid-column:span 4;} .span6{grid-column:span 6;} .span8{grid-column:span 8;} .span12{grid-column:span 12;}
+  .kv{display:grid;grid-template-columns:88px 1fr;row-gap:9px;font-size:13px;line-height:1.55;}
+  .kv b{color:var(--muted);font-weight:500;}
+  .status-pill{display:inline-block;padding:2px 12px;border-radius:99px;font-size:12px;font-weight:600;}
+  .pill-todo{background:#fef3c7;color:#92400e;} .pill-ok{background:#dcfce7;color:#166534;}
+  .pill-warn{background:#ffedd5;color:#9a3412;} .pill-ai{background:#ede9fe;color:#5b21b6;}
+  .money{font-family:ui-monospace,Menlo,monospace;}
+  .steps{list-style:none;}
+  .steps li{display:flex;gap:12px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:13px;}
+  .steps li:last-child{border-bottom:none;}
+  .step-n{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+  .steps li.done .step-n{background:var(--ok);}
+  .steps li .t{font-weight:600;} .steps li .d{color:var(--muted);margin-top:2px;font-size:12px;}
+  .ai-box{background:linear-gradient(180deg,#faf8f2 0%,#fff 100%);border:1px solid #e8e2d0;}
+  .ai-line{display:flex;gap:10px;margin-bottom:10px;font-size:13px;line-height:1.6;}
+  .ai-line .ico{flex-shrink:0;}
+  .corr{background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:10px 12px;font-size:12px;color:#9a3412;line-height:1.6;margin-top:12px;}
+  .corr b{color:#c2410c;}
+  .metric{display:flex;flex-direction:column;gap:4px;}
+  .metric .num{font-size:26px;font-weight:700;color:var(--accent);}
+  .metric .lbl{font-size:12px;color:var(--muted);}
+  .link-row a{color:#1d4ed8;text-decoration:none;font-size:12px;margin-right:14px;}
+  footer{margin-top:20px;font-size:11px;color:var(--muted);text-align:center;}
+  @media(max-width:720px){.span4,.span6,.span8{grid-column:span 12;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🏨 预订工单 AI 看板 · SO-20261210-001</h1>
+    <div class="sub">港口医院 · 国家级评审会接待 &nbsp;|&nbsp; 生成时间：2026-11-16 &nbsp;|&nbsp; AI通道：本地LiteLLM路由 → GLM免费模型</div>
+    <div class="tags">
+      <span class="tag">📅 2026-12-10 → 12-13（3晚）</span>
+      <span class="tag">🛏 5间房</span>
+      <span class="tag">🍽 202厅晚宴 12-13人</span>
+      <span class="tag">💰 报销标准 380元/间夜</span>
+      <span class="tag">👤 负责人：李勋</span>
+    </div>
+  </header>
+
+  <div class="grid">
+    <div class="card span8">
+      <h2>工单核心信息</h2>
+      <div class="kv">
+        <b>客户单位</b><span>港口医院（滨海新区医疗机构）</span>
+        <b>委托链条</b><span>华姐（港口医院）委托 → 邢主任（检验科）对接执行</span>
+        <b>住宿需求</b><span>5间房 × 3晚，报销标准 <span class="money">380</span> 元/间夜（语音转写误为308已修正）；<b>其中1间免费升级为套房</b>（客户指定）</span>
+        <b>宴会需求</b><span>12-10晚 · 202厅 · 12-13人欢迎晚宴（邢主任安排）</span>
+        <b>工单状态</b><span class="status-pill pill-todo">待接单</span> → 多维表格记录 <span class="status-pill pill-ok">已写入 reczz28aB1GA00pz</span></span>
+        <b>任务指派</b><span>飞书任务已创建并指派李勋（截止 2026-12-09）<span class="status-pill pill-ok">✅ 已通知</span></span>
+      </div>
+    </div>
+
+    <div class="card span4">
+      <h2>关键指标</h2>
+      <div class="metric" style="margin-bottom:14px;">
+        <span class="num money">4,560</span><span class="lbl">预计客房收入（4间×380×3晚，套房免费）</span>
+      </div>
+      <div class="metric" style="margin-bottom:14px;">
+        <span class="num money">380</span><span class="lbl">报销标准上限（元/间夜·已修正）</span>
+      </div>
+      <div class="metric">
+        <span class="num">12-13人</span><span class="lbl">晚宴规模 · AI建议餐标 300-500元/人</span>
+      </div>
+    </div>
+
+    <div class="card span6">
+      <h2>销售行动清单（李勋执行）</h2>
+      <ul class="steps">
+        <li><span class="step-n">1</span><div><div class="t">确认5间房型排布与套房升级</div><div class="d">12-10入住高分期锁定库存，套房免费升级需审批留痕</div></div></li>
+        <li><span class="step-n">2</span><div><div class="t">对接邢主任确认晚宴菜单与餐标</div><div class="d">202厅 12-13人，AI建议人均300-500元，提供2-3档菜单方案</div></div></li>
+        <li><span class="step-n">3</span><div><div class="t">与医院财务对齐报销口径</div><div class="d">380元/间夜含早餐与否需书面确认，发票抬头/明细提前核实</div></div></li>
+        <li><span class="step-n">4</span><div><div class="t">建机构客户档案，标记长期潜力</div><div class="d">港口医院为滨海新区医疗机构，评审会为首次深度合作切入点</div></div></li>
+      </ul>
+    </div>
+
+    <div class="card span6 ai-box">
+      <h2>AI 客情洞察 <span class="status-pill pill-ai">GLM免费模型</span></h2>
+      <div class="ai-line"><span class="ico">🎯</span><span><b>客户价值：</b>港口医院为滨海新区医疗机构，国家级评审会背景意味着外部专家住宿需求，长期合作潜力高，建议借机建立机构客户档案并收录卫健委/评审专家联系人网络。</span></div>
+      <div class="ai-line"><span class="ico">💰</span><span><b>报价策略：</b>380元为报销上限基准；4间标准房按标准执行；1间套房为客户指定<b>免费升级</b>，是关系维系成本，勿折算成现金折扣。</span></div>
+      <div class="ai-line"><span class="ico">📈</span><span><b>升单机会：</b>晚宴人均餐标300-500元区间，可提供宴席菜单A/B方案；酒水与布置是利润弹性空间；评审会专家若有额外住宿需求可顺势承接。</span></div>
+      <div class="corr">⚠️ <b>人工纠正记录×2：</b>① 报销标准语音转写 308→380（2026-11-16 用户复核修正，全资产已同步）；② AI 初次输出曾建议「套房提价至350元/间夜」，与客户免费升级要求<b>直接冲突</b>——已人工拦截。此为本工作流人机协作价值的实证：AI 输出必须过业务规则闸门。</div>
+    </div>
+
+    <div class="card span12">
+      <h2>资产链接</h2>
+      <div class="link-row">
+        <a href="https://delonix.feishu.cn/base/KcaTbKVivazHuksrzlDcIyWOnOf">📊 预订工单多维表格</a>
+        <a href="https://applink.feishu.cn/client/todo/detail?guid=17249d21-57e8-4730-a06b-c42052fd763c">✅ 飞书任务工单（李勋）</a>
+        <a href="https://delonix.feishu.cn/base/DqiRbEZCuatsVosgKejc69A9nBg">📋 销售每日跟进工作台账</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>德胧 · 天津瑞湾开元名都 · 销售预订工单工作流 v2 · 免费模型驱动 · Reality Gate：全部状态有凭证 · 数字口径已过语音转写校验闸门</footer>
+</div>
+</body>
+</html>

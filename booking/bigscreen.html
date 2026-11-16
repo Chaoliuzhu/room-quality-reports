@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>预订工单作战大屏 · 天津瑞湾开元名都</title>
+<style>
+  :root{
+    --bg:#0a1420; --panel:rgba(255,255,255,.045); --panel2:rgba(255,255,255,.08);
+    --ink:#e8eef4; --muted:#8fa3b5; --line:rgba(255,255,255,.12);
+    --green:#2ecc71; --gold:#d4af37; --blue:#3b9eff; --red:#ff5c5c; --orange:#ffa940;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);padding:22px;min-height:100vh;}
+  .wrap{max-width:1280px;margin:0 auto;}
+  header{display:flex;justify-content:space-between;align-items:center;padding:6px 4px 18px;}
+  header h1{font-size:21px;letter-spacing:1px;}
+  header h1 .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--green);margin-right:10px;box-shadow:0 0 12px var(--green);animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  header .meta{font-size:12px;color:var(--muted);text-align:right;line-height:1.7;}
+  .kpi-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:16px;}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;position:relative;overflow:hidden;}
+  .kpi::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent,#2ecc71);}
+  .kpi .v{font-size:30px;font-weight:700;font-family:ui-monospace,Menlo,monospace;}
+  .kpi .l{font-size:12px;color:var(--muted);margin-top:4px;}
+  .kpi .sub{font-size:11px;color:var(--muted);margin-top:2px;}
+  .grid{display:grid;grid-template-columns:2fr 1fr;gap:14px;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px;}
+  .card h2{font-size:13px;color:var(--muted);letter-spacing:1px;margin-bottom:14px;display:flex;justify-content:space-between;}
+  .card h2 .badge{font-size:11px;padding:2px 10px;border-radius:99px;background:var(--panel2);color:var(--ink);}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th{color:var(--muted);font-weight:500;text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);font-size:12px;}
+  td{padding:11px 10px;border-bottom:1px solid rgba(255,255,255,.06);vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  .pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:11px;font-weight:600;}
+  .pill-doing{background:rgba(46,204,113,.15);color:var(--green);}
+  .pill-todo{background:rgba(255,169,64,.15);color:var(--orange);}
+  .pill-done{background:rgba(59,158,255,.15);color:var(--blue);}
+  .pill-ok{background:rgba(46,204,113,.12);color:var(--green);}
+  .pill-warn{background:rgba(255,169,64,.15);color:var(--orange);}
+  .money{font-family:ui-monospace,Menlo,monospace;color:var(--gold);}
+  .timeline{position:relative;padding-left:18px;}
+  .timeline::before{content:"";position:absolute;left:4px;top:6px;bottom:6px;width:2px;background:var(--line);}
+  .tl-item{position:relative;padding:0 0 16px 12px;}
+  .tl-item::before{content:"";position:absolute;left:-18px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px rgba(212,175,55,.5);}
+  .tl-item .t{font-size:13px;font-weight:600;}
+  .tl-item .d{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.6;}
+  .tl-item .when{font-size:11px;color:var(--gold);margin-top:2px;font-family:ui-monospace,Menlo,monospace;}
+  footer{margin-top:18px;text-align:center;font-size:11px;color:var(--muted);}
+  .refresh-note{margin-top:6px;font-size:11px;color:var(--muted);text-align:center;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1><span class="dot"></span>预订工单作战大屏 · 天津瑞湾开元名都</h1>
+    <div class="meta">数据源：飞书多维表格「酒店销售预订工单」<br>AI通道：LiteLLM 免费模型 · 工作流 v2 · 2026-11-16 生成</div>
+  </header>
+
+  <div class="kpi-row">
+    <div class="kpi" style="--accent:#3b9eff"><div class="v">1</div><div class="l">在途工单</div><div class="sub">处理中 1 · 待接单 0</div></div>
+    <div class="kpi" style="--accent:#2ecc71"><div class="v money">4,560</div><div class="l">预计客房收入（元）</div><div class="sub">4间×380×3晚·套房免费</div></div>
+    <div class="kpi" style="--accent:#d4af37"><div class="v">15</div><div class="l">预计间夜</div><div class="sub">5房×3晚</div></div>
+    <div class="kpi" style="--accent:#ffa940"><div class="v">1</div><div class="l">待办宴会</div><div class="sub">202厅·12-13人·12-10晚</div></div>
+    <div class="kpi" style="--accent:#2ecc71"><div class="v">100%</div><div class="l">SLA健康度</div><div class="sub">超时 0 · 即将超时 0</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>工单明细<span class="badge">共1单</span></h2>
+      <table>
+        <tr><th>工单号</th><th>客户/委托链</th><th>日期</th><th>需求</th><th>金额</th><th>负责人</th><th>状态</th><th>SLA</th></tr>
+        <tr>
+          <td style="font-family:ui-monospace,monospace">SO-20261210-001</td>
+          <td><b>港口医院</b><br><span style="color:var(--muted);font-size:11px">华姐→邢主任（检验科）</span></td>
+          <td style="font-family:ui-monospace,monospace">12-10→12-13<br><span style="color:var(--muted);font-size:11px">3晚</span></td>
+          <td>5房·1间升套房<br><span style="color:var(--muted);font-size:11px">国家级评审会</span></td>
+          <td class="money">4,560<br><span style="color:var(--muted);font-size:11px">380/间夜</span></td>
+          <td>李勋</td>
+          <td><span class="pill pill-doing">处理中</span></td>
+          <td><span class="pill pill-ok">正常</span></td>
+        </tr>
+      </table>
+      <div class="refresh-note">自动刷新节奏：SLA扫描 workflow 每日 09:00 · 状态机 workflow 实时触发</div>
+    </div>
+
+    <div class="card">
+      <h2>关键节点倒排<span class="badge">距到店 24 天</span></h2>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="t">套房升级审批 + 5间房型锁定</div>
+          <div class="d">免费升级需审批留痕；12月为会议旺季，提前锁库存</div>
+          <div class="when">DDL 12-01（建议）</div>
+        </div>
+        <div class="tl-item">
+          <div class="t">晚宴菜单/餐标确认（邢主任）</div>
+          <div class="d">202厅 12-13人，A/B菜单方案，人均300-500元区间</div>
+          <div class="when">DDL 12-05（建议）</div>
+        </div>
+        <div class="tl-item">
+          <div class="t">报销口径书面确认（医院财务）</div>
+          <div class="d">380元/间夜含早与否、发票抬头与明细</div>
+          <div class="when">DDL 12-08（建议）</div>
+        </div>
+        <div class="tl-item">
+          <div class="t">任务截止（飞书任务）</div>
+          <div class="d">李勋接单确认全要素</div>
+          <div class="when">12-09（已设）</div>
+        </div>
+        <div class="tl-item" style="--dot:#2ecc71">
+          <div class="t">客人到店 · 欢迎晚宴</div>
+          <div class="d">入住 5 间（含套房1间）；晚 202 厅欢迎晚宴</div>
+          <div class="when">12-10（到店日）</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>德胧 · 天津瑞湾开元名都 · 销售预订工单工作流 v2 · 免费模型驱动 · 数据实时来自飞书多维表格 · 大屏 v1（单店单表聚合）</footer>
+</div>
+</body>
+</html>
